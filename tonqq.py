@@ -5,13 +5,13 @@ import requests
 def get_steles_index(base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', map_url='steles.yaml'):
     get_steles_yaml = requests.get(base_url + map_url)
     steles_yaml = get_steles_yaml.text
-    steles = yaml.safe_load(steles_yaml)
-    for stele in steles['steles']:
-        for face in steles['steles'][stele]['faces']:
-            for line in steles['steles'][stele]['faces'][face]['lines']:
-                steles['steles'][stele]['faces'][face]['lines'][line] = int(
-                    steles['steles'][stele]['faces'][face]['lines'][line])
-    return steles['steles']
+    steles_index = yaml.safe_load(steles_yaml)
+    for stele in steles_index['steles']:
+        for face in steles_index['steles'][stele]['faces']:
+            for line in steles_index['steles'][stele]['faces'][face]['lines']:
+                steles_index['steles'][stele]['faces'][face]['lines'][line] = int(
+                    steles_index['steles'][stele]['faces'][face]['lines'][line])
+    return steles_index['steles']
 
 
 def to_url(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/'):
