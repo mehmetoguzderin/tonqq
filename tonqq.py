@@ -25,11 +25,14 @@ def get_inscriptions(steles_index, stele, face, line, base_url='https://github.c
     get_inscriptions_yaml = requests.get(
         to_url(steles_index, stele, face, line, base_url=base_url))
     inscriptions_yaml = get_inscriptions_yaml.text
-    inscriptions = inscriptions_yaml.split('\n')[1:-1]
-    for index, inscription in enumerate(inscriptions):
-        split_tokens = inscription.split('"')[1]
+    inscriptions_line = inscriptions_yaml.split('\n')[1:-1]
+    inscriptions = []
+    for index, inscription in enumerate(inscriptions_line):
+        split_tokens = inscription.split('"')
         if len(split_tokens) > 1:
-            inscriptions[index] = inscription.split('"')[1]
+            inscriptions.append(split_tokens[1])
+        else:
+            break
     return inscriptions
 
 
