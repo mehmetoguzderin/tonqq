@@ -27,7 +27,9 @@ def get_inscriptions(steles_index, stele, face, line, base_url='https://github.c
     inscriptions_yaml = get_inscriptions_yaml.text
     inscriptions = inscriptions_yaml.split('\n')[1:-1]
     for index, inscription in enumerate(inscriptions):
-        inscriptions[index] = inscription.split('"')[1]
+        split_tokens = inscription.split('"')[1]
+        if len(split_tokens) > 1:
+            inscriptions[index] = inscription.split('"')[1]
     return inscriptions
 
 
