@@ -2,7 +2,7 @@ import yaml
 import requests
 
 
-def get_steles_index(base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', map_url='steles.yaml'):
+def get_steles_index(base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/', map_url='steles.yaml'):
     get_steles_yaml = requests.get(base_url + map_url)
     steles_yaml = get_steles_yaml.text
     steles_index = yaml.safe_load(steles_yaml)
@@ -14,14 +14,14 @@ def get_steles_index(base_url='https://github.com/mehmetoguzderin/tonqq/raw/mast
     return steles_index['steles']
 
 
-def to_url(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/'):
+def to_url(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/'):
     return (base_url + format(int(stele), '01d') +
             '/faces/' + format(int(face), '01d') +
             '/lines/' + format(int(line), '02d') +
             '/inscriptions.yaml')
 
 
-def get_inscriptions(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/'):
+def get_inscriptions(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/'):
     get_inscriptions_yaml = requests.get(
         to_url(steles_index, stele, face, line, base_url=base_url))
     inscriptions_yaml = get_inscriptions_yaml.text
@@ -36,11 +36,11 @@ def get_inscriptions(steles_index, stele, face, line, base_url='https://github.c
     return inscriptions
 
 
-def get_line(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', end_token=u'\u200F'):
+def get_line(steles_index, stele, face, line, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/', end_token=u'\u200F'):
     return ''.join(get_inscriptions(steles_index, stele, face, line, base_url=base_url)) + end_token
 
 
-def get_face(steles_index, stele, face, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', end_token=u'\u200F'):
+def get_face(steles_index, stele, face, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/', end_token=u'\u200F'):
     lines = []
     for line in steles_index[stele]['faces'][face]['lines'].keys():
         lines.append(get_line(steles_index, stele, face, line,
@@ -48,7 +48,7 @@ def get_face(steles_index, stele, face, base_url='https://github.com/mehmetoguzd
     return lines
 
 
-def get_stele(steles_index, stele, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', end_token=u'\u200F'):
+def get_stele(steles_index, stele, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/', end_token=u'\u200F'):
     faces = []
     for face in steles_index[stele]['faces'].keys():
         faces.append(get_face(steles_index, stele, face,
@@ -56,7 +56,7 @@ def get_stele(steles_index, stele, base_url='https://github.com/mehmetoguzderin/
     return faces
 
 
-def get_steles(steles_index, base_url='https://github.com/mehmetoguzderin/tonqq/raw/master/steles/', end_token=u'\u200F'):
+def get_steles(steles_index, base_url='https://github.com/mehmetoguzderin/tonqq-yaml/raw/master/steles/', end_token=u'\u200F'):
     steles = []
     for stele in steles_index.keys():
         steles.append(get_stele(steles_index, stele,
