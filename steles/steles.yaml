@@ -1,5 +1,5 @@
 steles:
-  0:
+  0: # Blue
     faces:
       0:
         lines:
@@ -44,7 +44,7 @@ steles:
           08: 116
           09: 112
           10: 107
-  1:
+  1: # Grey
     faces:
       0:
         lines:
